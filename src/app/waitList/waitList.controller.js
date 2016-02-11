@@ -40,14 +40,27 @@
 
         vm.parties = $firebaseArray(fireParties);
 
+        // The constructor function, party
+
+        function Party() {
+            this.name = '';
+            this.phone = '';
+            this.size = '';
+            this.done = false;
+            this.notified = false;
+        }
+
+        vm.newParty = new Party()
+
         vm.addParty = addParty; // Allows the view to access the addParty function
 
         function addParty() {
-            vm.parties.$add('another');
+            vm.parties.$add(vm.newParty);
+            vm.newParty = new Party();
         }
     }
 })();
 
-
+// Binds the value of an input to a value on your view model
 // Firebase allows you to have a full backed app with a DB without having to write
 // any server side code. Owned by google, so it's easy to use with angular (angularFire)
