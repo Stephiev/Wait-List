@@ -32,6 +32,10 @@
         // app
         var fireParties = new Firebase('https://waitandeatsvvsdemo.firebaseio.com/parties');
 
+        // Save text messages        
+        var fireTextMessages = new Firebase('https://waitandeatsvvsdemo.firebaseio.com/textMessages');
+
+
         // Wrap this data inside an angular service called firebaseArray which is the
         // dependency we injected on line 18. This takes as parameters a fire base
         // referene, in this case it's fireParties as it's a reference to the data
@@ -50,14 +54,33 @@
             this.notified = false;
         }
 
+        // Adding properties
         vm.newParty = new Party()
 
         vm.addParty = addParty; // Allows the view to access the addParty function
 
+        vm.removeParty = removeParty; // Remove party locally and from DB
+
+
+        vm.sendTextMessage = sendTextMessage;
+
+        // Functions
         function addParty() {
             vm.parties.$add(vm.newParty);
             vm.newParty = new Party();
         }
+
+        function removeParty(party) {
+            vm.parties.$remove(party);
+        }
+
+
+        function sendTextMessage(party) {
+
+            //            console.log(phone)
+
+        }
+
     }
 })();
 

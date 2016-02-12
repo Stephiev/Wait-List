@@ -14,6 +14,38 @@
     <button type="submit" class="btn btn-primary">Add Party</button>
 </form>
 
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Done?</th>
+            <th>Info</th>
+            <th>Notified?</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tr ng-repeat="party in vm.parties">
+        <td>
+            <!--        TODO Checkbox-->
+        </td>
+        <td>
+            <div>
+                <strong>
+                    {{party.name}} (Party of {{party.size}})
+                </strong>
+            </div>
+            <div>
+                {{ party.phone }}
+            </div>
+        </td>
+        <td>
+            {{ party.notified ? 'Yes' : 'No' }}
+        </td>
+        <td>
+            <!-- TODO: Button that sends text to party-->
+            <button ng-click="vm.sendText(party)" class="btn btn-success">Send SMS</button>
+            <!-- TODO: Button that removes party from list-->
+            <button ng-click="vm.removeParty(party)" class="btn btn-danger">Remove</button>
 
-{{ vm.newParty }}
-<br> {{vm.parties}}
+        </td>
+    </tr>
+</table>
