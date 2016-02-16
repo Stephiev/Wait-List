@@ -16,7 +16,6 @@
             textMessages: root.child('textMessages')
         };
 
-
         return service;
     }
-});
+})()

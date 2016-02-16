@@ -24,9 +24,9 @@
 
     // Injecting services, convention to put Angular, third party then costume services
 
-    WaitListController.$inject = ['firebaseDataService', 'FIREBASE_URL', 'partyService'];
+    WaitListController.$inject = ['firebaseDataService', 'partyService'];
 
-    function WaitListController(FIREBASE_URL, partyService) {
+    function WaitListController(firebaseDataService, partyService) {
         // Can reference the this of this instance in our code and be
         // very explicit about what we're referring to
         // Pointing to our object instance of this constructor
@@ -34,23 +34,12 @@
 
         var vm = this; // vm === viewModel
 
-        // Want to make a connection to firebase and set it to a new
-        // firebase instance. Connects our app to a specific firebase
-        // app
-
-
-        // Wrap this data inside an angular service called firebaseArray which is the
-        // dependency we injected on line 18. This takes as parameters a fire base
-        // referene, in this case it's fireParties as it's a reference to the data
-        // for our app
-        // Want to save it to a variable so we can reference it inside our view
-
-
-        vm.parties = partyService.parties;
-
 
         // Adding properties
         vm.newParty = new partyService.Party()
+
+        vm.parties = partyService.parties;
+
 
         vm.addParty = addParty; // Allows the view to access the addParty function
 

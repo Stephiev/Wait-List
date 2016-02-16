@@ -1,3 +1,5 @@
+// handling parties
+
 (function () {
     'use strict'
 
@@ -16,6 +18,16 @@
     function partyService($firebaseArray, firebaseDataService) {
         // return an object that will be injected throughout the app, injecting this service
         // will be injecting the object retuned by this function 
+
+
+
+        // Wrap this data inside an angular service called firebaseArray which is the
+        // dependency we injected on line 18. This takes as parameters a fire base
+        // referene, in this case it's fireParties as it's a reference to the data
+        // for our app
+        // Want to save it to a variable so we can reference it inside our view
+
+
         var service = {
             Party: Party,
             parties: $firebaseArray(firebaseDataService.root.child('parties'))
