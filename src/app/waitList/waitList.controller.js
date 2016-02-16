@@ -22,9 +22,11 @@
     // Without the line below the app wil work fine since it's not minified, 
     // once minified it will break
 
-    WaitListController.$inject = ['$firebaseArray', 'FIREBASE_URL'];
+    // Injecting services, convention to put Angular, third party then costume services
 
-    function WaitListController($firebaseArray, FIREBASE_URL) {
+    WaitListController.$inject = ['FIREBASE_URL', 'partyService'];
+
+    function WaitListController(FIREBASE_URL, partyService) {
         // Can reference the this of this instance in our code and be
         // very explicit about what we're referring to
         // Pointing to our object instance of this constructor
@@ -35,10 +37,10 @@
         // Want to make a connection to firebase and set it to a new
         // firebase instance. Connects our app to a specific firebase
         // app
-        var fireParties = new Firebase(FIREBASE_URL + 'parties');
+        //        var fireParties = new Firebase(FIREBASE_URL + 'parties'); can be taken out b/c it is now in partyService file
 
         // Save text messages        
-        var fireTextMessages = new Firebase(FIREBASE_URL + 'textMessages');
+        //        var fireTextMessages = new Firebase(FIREBASE_URL + 'textMessages'); taken care of in dataservices
 
 
         // Wrap this data inside an angular service called firebaseArray which is the
@@ -47,20 +49,22 @@
         // for our app
         // Want to save it to a variable so we can reference it inside our view
 
-        vm.parties = $firebaseArray(fireParties);
+        //        vm.parties = $firebaseArray(fireParties); // allows us to have access to methods l ike $add $remove $save
+        // the line above is now the line below...
+        vm.parties = partyService.parties;
 
-        // The constructor function, party
-
-        function Party() {
-            this.name = '';
-            this.phone = '';
-            this.size = '';
-            this.done = false;
-            this.notified = false;
-        }
+        //        // The constructor function, party MOVED TO SERVICE
+        //
+        //        function Party() {
+        //            this.name = '';
+        //            this.phone = '';
+        //            this.size = '';
+        //            this.done = false;
+        //            this.notified = false;
+        //        }
 
         // Adding properties
-        vm.newParty = new Party()
+        vm.newParty = new partyService.Party()
 
         vm.addParty = addParty; // Allows the view to access the addParty function
 
@@ -74,7 +78,7 @@
         // Functions
         function addParty() {
             vm.parties.$add(vm.newParty);
-            vm.newParty = new Party();
+            vm.newParty = new partyService.Party();
         }
 
         function removeParty(party) {
