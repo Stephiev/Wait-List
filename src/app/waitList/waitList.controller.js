@@ -24,7 +24,7 @@
 
     // Injecting services, convention to put Angular, third party then costume services
 
-    WaitListController.$inject = ['FIREBASE_URL', 'partyService'];
+    WaitListController.$inject = ['firebaseDataService', 'FIREBASE_URL', 'partyService'];
 
     function WaitListController(FIREBASE_URL, partyService) {
         // Can reference the this of this instance in our code and be
@@ -37,10 +37,6 @@
         // Want to make a connection to firebase and set it to a new
         // firebase instance. Connects our app to a specific firebase
         // app
-        //        var fireParties = new Firebase(FIREBASE_URL + 'parties'); can be taken out b/c it is now in partyService file
-
-        // Save text messages        
-        //        var fireTextMessages = new Firebase(FIREBASE_URL + 'textMessages'); taken care of in dataservices
 
 
         // Wrap this data inside an angular service called firebaseArray which is the
@@ -49,19 +45,9 @@
         // for our app
         // Want to save it to a variable so we can reference it inside our view
 
-        //        vm.parties = $firebaseArray(fireParties); // allows us to have access to methods l ike $add $remove $save
-        // the line above is now the line below...
+
         vm.parties = partyService.parties;
 
-        //        // The constructor function, party MOVED TO SERVICE
-        //
-        //        function Party() {
-        //            this.name = '';
-        //            this.phone = '';
-        //            this.size = '';
-        //            this.done = false;
-        //            this.notified = false;
-        //        }
 
         // Adding properties
         vm.newParty = new partyService.Party()
@@ -93,7 +79,7 @@
                 name: party.name
             };
 
-            fireTextMessages.push(newTextMessage)
+            firebaseDataService.textMessages.push(newTextMessage) // Why did we use push here?
             party.notified = true // local change
             vm.parties.$save(party) // save the local changes up to firebase
                 //            console.log(phone)

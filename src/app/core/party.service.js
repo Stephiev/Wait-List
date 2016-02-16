@@ -11,7 +11,7 @@
         // Will reference the function below, it's easier to read when the function
         // paramter is pulled out as a named function 
 
-    partyService.$inject('$firebaseArray', 'firebaseDataService')
+    partyService.$inject = ['$firebaseArray', 'firebaseDataService'];
 
     function partyService($firebaseArray, firebaseDataService) {
         // return an object that will be injected throughout the app, injecting this service
