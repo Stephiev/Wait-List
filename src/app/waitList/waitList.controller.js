@@ -1,4 +1,9 @@
 // Controllers where all the logic is, this is how we affect the view
+// Want to keep them as small as possible, once they start getting too large
+// start moving to services
+
+// Services are singletons that persist throughout the lifetime of the application,
+// while controllers are transient between application states.
 
 (function () {
     'use strict';
@@ -17,9 +22,9 @@
     // Without the line below the app wil work fine since it's not minified, 
     // once minified it will break
 
-    WaitListController.$inject = ['$firebaseArray'];
+    WaitListController.$inject = ['$firebaseArray', 'FIREBASE_URL'];
 
-    function WaitListController($firebaseArray) {
+    function WaitListController($firebaseArray, FIREBASE_URL) {
         // Can reference the this of this instance in our code and be
         // very explicit about what we're referring to
         // Pointing to our object instance of this constructor
@@ -30,10 +35,10 @@
         // Want to make a connection to firebase and set it to a new
         // firebase instance. Connects our app to a specific firebase
         // app
-        var fireParties = new Firebase('https://waitandeatsvvsdemo.firebaseio.com/parties');
+        var fireParties = new Firebase(FIREBASE_URL + 'parties');
 
         // Save text messages        
-        var fireTextMessages = new Firebase('https://waitandeatsvvsdemo.firebaseio.com/textMessages');
+        var fireTextMessages = new Firebase(FIREBASE_URL + 'textMessages');
 
 
         // Wrap this data inside an angular service called firebaseArray which is the
@@ -64,6 +69,8 @@
 
         vm.sendTextMessage = sendTextMessage;
 
+        vm.toggleDone = toggleDone;
+
         // Functions
         function addParty() {
             vm.parties.$add(vm.newParty);
@@ -76,9 +83,21 @@
 
 
         function sendTextMessage(party) {
+            var newTextMessage = {
+                phoneNumber: party.phone,
+                size: party.size,
+                name: party.name
+            };
 
-            //            console.log(phone)
+            fireTextMessages.push(newTextMessage)
+            party.notified = true // local change
+            vm.parties.$save(party) // save the local changes up to firebase
+                //            console.log(phone)
 
+        }
+
+        function toggleDone(party) {
+            vm.parties.$save(party); // save local changes up to firebase
         }
 
     }
