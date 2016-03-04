@@ -28,8 +28,10 @@
     function configFunction($routeProvider) {
         // The 'when' method takes the URL you want to configure
         // and an object that has a couple properties. I'm using the 
-        // tempalt4eUrl property where you give
+        // tempalateUrl property where you give
         // the path to a file to load when you hit the given URL
+        // The controllelr property determines which controller this section of the app
+        // will be using. ControllerAs let's us refer to the controller as vm.
         $routeProvider.when('/register', {
             templateUrl: "app/auth/register.html",
             controller: "AuthController",
