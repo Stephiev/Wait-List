@@ -21,14 +21,14 @@
 
     // Angular services, third party services then custom services
 
-    AuthController.$inject = ['$location', '$firebaseAuth', 'FIREBASE_URL']; // Safe from minification
+    AuthController.$inject = ['$location', 'authService']; // Safe from minification
 
-    function AuthController($location, $firebaseAuth, FIREBASE_URL) {
+    function AuthController($location, authService) {
         var vm = this;
-        var firebaseReference = new Firebase(FIREBASE_URL);
-        // Will have all the register/authentication methods on it
+        //        var firebaseReference = new Firebase(FIREBASE_URL);
+        // Will have all the register/authentication methods on it, AngularFire
 
-        var firebaseAuthObject = $firebaseAuth(firebaseReference);
+        //        var firebaseAuthObject = $firebaseAuth(firebaseReference);
 
         vm.user = {
             email: '',
@@ -53,14 +53,15 @@
             // createUser returns a promise
             // Rather than depending
             // upon a callback to fire, we can interact with the data as though it has already returned.
-            return firebaseAuthObject.$createUser(user)
+            //            return firebaseAuthObject.$createUser(user)
+            return authService.register(user)
                 .then(function () { // Had to remove 'user' as a parameter so it does not override 
-                    // the original 'user'
-                    vm.login(user)
-                })
-                .catch(function (error) {
-                    console.log(error)
-                })
+                        // the original 'user'
+                        vm.login(user)
+                    })
+                    .catch(function (error) {
+                        console.log(error)
+                    })
         }
 
         // This method returns a promise which is resolved or rejected when the authentication attempt 
@@ -70,7 +71,7 @@
 
 
         function login(user) {
-            return firebaseAuthObject.$authWithPassword(user)
+            return authService.login(user)
                 .then(function (authData) {
                     console.log("Logged in as:", authData.uid);
                     $location.path('/waitlist')
@@ -81,7 +82,7 @@
         }
 
         function logout() {
-            firebaseAuthObject.$unauth()
+            authService.logout()
                 // Redirect to landing page, '/', upon logging out
             $location.path('/')
 
