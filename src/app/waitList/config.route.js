@@ -34,8 +34,26 @@
         $routeProvider.when('/waitlist', {
             templateUrl: 'app/waitList/waitList.html',
             controller: 'WaitListController',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            resolve: {
+                user: resolveUser
+            }
         });
+    }
+
+
+    // "resolve" is used to help lockdown our waitlist page, only logged in usesrs can access it
+    // Using this object you can specify things you want to inject into the controller using
+    // dependency injection. The controller will only load if the given function resolves successfully
+    // If the promise resolves successfully then the controller will load and the user
+    // will be set to the return value of the resolved data. If the promise is rejected, aka no logged in user
+    // then the controller won't even load
+
+    resolveUser.$inject = ['authService']
+
+    function resolveUser(authService) {
+        return authService.firebaseAuthObject.$requireAuth();
+
     }
 
 

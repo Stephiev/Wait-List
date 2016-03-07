@@ -16,7 +16,8 @@
 
             var service = {
                 root: root,
-                textMessages: root.child('textmessages')
+                textMessages: root.child('textmessages'),
+                users: root.child('users')
             };
 
             return service;

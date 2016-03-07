@@ -43,6 +43,8 @@
 
         vm.logout = logout;
 
+        vm.isLoggedIn = authService.isLoggedIn
+
         // 1. Success: Firebase creates the new user.
         // Run a success function
 
@@ -56,12 +58,12 @@
             //            return firebaseAuthObject.$createUser(user)
             return authService.register(user)
                 .then(function () { // Had to remove 'user' as a parameter so it does not override 
-                        // the original 'user'
-                        vm.login(user)
-                    })
-                    .catch(function (error) {
-                        console.log(error)
-                    })
+                    // the original 'user'
+                    vm.login(user)
+                })
+                .catch(function (error) {
+                    console.log(error)
+                })
         }
 
         // This method returns a promise which is resolved or rejected when the authentication attempt 

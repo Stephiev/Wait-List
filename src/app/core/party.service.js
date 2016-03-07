@@ -1,7 +1,6 @@
 (function () {
     'use strict';
 
-
     // User .factory to register a more complicated service.
     // Generally services return and object with useful methods
     angular.module('app.core')
@@ -22,7 +21,8 @@
 
         var service = {
             Party: Party,
-            parties: $firebaseArray(firebaseDataService.root.child('parties')) // Allows us to hev  methods like $save and $add
+            getPartiesByUser: getPartiesByUser
+                // parties: $firebaseArray(firebaseDataService.root.child('parties')) // Allows us to hev  methods like $save and $add
         };
 
         return service;
@@ -39,6 +39,8 @@
             this.notified = false;
         }
 
+        function getPartiesByUser(uid) {
+            return $firebaseArray(firebaseDataService.users.child(uid).child('parties'))
+        }
     }
-
 })();

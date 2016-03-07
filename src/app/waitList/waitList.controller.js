@@ -22,9 +22,13 @@
     // Without the line below the app wil work fine since it's not minified, 
     // once minified it will break
 
-    WaitListController.$inject = ['partyService', 'textMessageService'];
+    WaitListController.$inject = ['partyService', 'textMessageService', 'user'];
 
-    function WaitListController(partyService, textMessageService) {
+    function WaitListController(partyService, textMessageService, user) {
+        // log resolved user to console
+        console.log(user.uid)
+
+
         // Can reference the this of this instance in our code and be
         // very explicit about what we're referring to
         // Pointing to our object instance of this constructor
@@ -47,7 +51,7 @@
         // for our app
         // Want to save it to a variable so we can reference it inside our view
 
-        vm.parties = partyService.parties;
+        vm.parties = partyService.getPartiesByUser(user.uid);
 
         // Moved to partyService.js
         // The constructor function, party

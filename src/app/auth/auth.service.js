@@ -13,7 +13,9 @@
         var service = {
             register: register,
             login: login,
-            logout: logout
+            logout: logout,
+            isLoggedIn: isLoggedIn,
+            firebaseAuthObject: firebaseAuthObject
         };
 
         return service;
@@ -31,6 +33,11 @@
 
         function logout() {
             return firebaseAuthObject.$unauth();
+        }
+
+        // For showing log in our log out links
+        function isLoggedIn() {
+            return firebaseAuthObject.$getAuth();
         }
 
 
