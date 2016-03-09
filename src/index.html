@@ -13,28 +13,10 @@
 
 <body>
 
-    <nav ng-controller="AuthController as vm" class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#/">Wait and Eat</a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a ng-hide="vm.isLoggedIn()" href="#/login">Log in</a></li>
-                    <li><a ng-show="vm.isLoggedIn()" href="" ng-click="vm.logout()">Log out</a></li>
-                </ul>
-            </div>
-            <!--/.nav-collapse -->
-        </div>
-    </nav>
+    <!-- Navbar directive that stays at the top of every page-->
+    <sv-navbar></sv-navbar>
 
-    <div>HERE HERE HERE &#9734; </div>
+    <!--    <div>HERE HERE HERE &#9734; </div>-->
 
     <!-- Content that changes based on route-->
     <ng-view></ng-view>
@@ -67,6 +49,10 @@
     <!-- Landing Module-->
     <script src="app/landing/landing.module.js"></script>
     <script src="app/landing/config.route.js"></script>
+
+    <!-- Layout Module-->
+    <script src="app/layout/layout.module.js"></script>
+    <script src="app/layout/navbar.directive.js"></script>
 
     <!-- Wait List Module-->
     <script src="app/waitList/waitList.module.js"></script>
