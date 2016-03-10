@@ -34,18 +34,23 @@
 
     function configFunction($routeProvider) {
         $routeProvider.otherwise({
-            redirectTo: '/register'
+            redirectTo: '/'
         })
     }
 
 
     // Run is like running any kind of code you want after the app is configured
-
     runFunction.$inject = ['$rootScope', '$location']; // Need $location to redirect to homepage
 
+    // This function will listen to the routeChangeError broadcasted by resolveUser in waitlist/configRoute
     function runFunction($rootScope, $location) {
 
+        $rootScope.$on('$routeChangeError', function (event, next, previous, error) {
+            // We can catch the error thrown when the $requireAuth promise is rejected
+            // and redirect the user back to the home page
+            if (error === 'AUTH_REQUIRED') {
+                $location.path('/')
+            }
+        })
     };
-
-
 })();
