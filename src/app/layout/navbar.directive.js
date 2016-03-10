@@ -8,7 +8,7 @@
         return {
             templateUrl: 'app/layout/navbar.html',
             restrict: 'E',
-            scope: {}.
+            scope: {},
             controller: NavbarController,
             controllerAs: 'vm'
                 // reference a file for a template

@@ -24,5 +24,17 @@
     'app.auth',
     'app.layout'
 
-  ]);
+  ])
+        .config(configFunction);
+
+    // Redirect to HP if trying to access a non-existent page
+
+    configFunction.$inject = ['$routeProvider'];
+
+    function configFunction($routeProvider) {
+        $routeProvider.otherwise({
+            redirectTo: '/'
+        })
+
+    }
 })();
