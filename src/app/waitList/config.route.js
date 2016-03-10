@@ -41,7 +41,6 @@
         });
     }
 
-
     // "resolve" is used to help lockdown our waitlist page, only logged in usesrs can access it
     // Using this object you can specify things you want to inject into the controller using
     // dependency injection. The controller will only load if the given function resolves successfully
@@ -49,12 +48,22 @@
     // will be set to the return value of the resolved data. If the promise is rejected, aka no logged in user
     // then the controller won't even load
 
-    resolveUser.$inject = ['authService']
+    resolveUser.$inject = ['authService'];
+
+    // $waitForAuth() will wait for the promise to resolve, and will not require the user to actually be logged in. This // makes it useful when you want to check if the user is logged in or not, and then do something accordingly.
+
+    //  $requireAuth() will require the user to be logged in or the promise will be rejected. Useful for
+    // securing routes where the user needs to be logged in.
 
     function resolveUser(authService) {
         return authService.firebaseAuthObject.$requireAuth();
 
     }
+
+    // resolveUser will broadcast a $routeChangeError and we can listen to it, but it's broadcasted 
+    // on the $rootScope so to listen to it we need to inject the $rootScope. $rootScope is the scope 
+    // that's visible throughout the entire app. Way to communicate throughout the entire app, with all
+    // the controllers
 
 
 })()

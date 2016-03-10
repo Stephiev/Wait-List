@@ -25,7 +25,8 @@
     'app.layout'
 
   ])
-        .config(configFunction);
+        .config(configFunction) // Happens before a lot of the application is built
+        .run(runFunction);
 
     // Redirect to HP if trying to access a non-existent page
 
@@ -33,8 +34,18 @@
 
     function configFunction($routeProvider) {
         $routeProvider.otherwise({
-            redirectTo: '/'
+            redirectTo: '/register'
         })
-
     }
+
+
+    // Run is like running any kind of code you want after the app is configured
+
+    runFunction.$inject = ['$rootScope', '$location']; // Need $location to redirect to homepage
+
+    function runFunction($rootScope, $location) {
+
+    };
+
+
 })();
